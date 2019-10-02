@@ -6,6 +6,7 @@ const innerAudioContext = wx.createInnerAudioContext();
 const NOT_START = 0;
 const GOING = 1;
 const PAUSING = 2;
+const colors = ["#cc00ff", "#00ff00", "#ff4d4d", "#aaaa55", "#669999", "#0000e6", "#99ff33", "#ff1aff", "#e60000"];
 
 Page({
     data: {
@@ -13,9 +14,20 @@ Page({
         playState: NOT_START,
         recordBtnText: "Start",
         playBtnText: "End",
-        tempFilePath: ""
+        tempFilePath: "",
+        color:"",
+        backgroundColor:""
     },
-
+    changeButtonColor: function(){
+        this.setData({
+            color: colors[Math.floor(Math.random() * colors.length)]
+        });
+    },
+    changePageColor: function(){
+        this.setData({
+            backgroundColor: colors[Math.floor(Math.random() * colors.length)]
+        });
+    },
     onRecordBtnClicked: function(){
         if (this.data.recordState === NOT_START){ // First click
             this.startRecord();

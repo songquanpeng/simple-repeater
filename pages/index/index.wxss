@@ -1,5 +1,27 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
 
-.button {
+.settingBtn {
+    margin: 16px;
+    display: inline-block;
+}
+
+.settingBox {
+    display: inline-flex;
+}
+
+.controlBox {
+    display: inline-flex;
+}
+
+.controlButton {
     width: 150px;
     height: 150px;
     margin: 16px;
@@ -10,7 +32,18 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.button:hover {
+.controlButton:hover {
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.noseBtn {
+    width: 50%;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.mouthBtn {
+    width: 300px;
+    height: 50px;
 }
 

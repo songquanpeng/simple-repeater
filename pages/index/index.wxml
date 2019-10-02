@@ -1,4 +1,16 @@
-<view class="container">
-    <button bindtap="onRecordBtnClicked" class='button'>{{recordBtnText}}</button>
-    <button bindtap="onPlayBthClicked" class='button'>{{playBtnText}}</button>
+<view class="container" style="background-color:{{backgroundColor}};">
+    <view class="settingBox">
+        <button class="settingBtn" style="background-color:{{color}};">设置复读次数</button>
+        <button class="settingBtn" style="background-color:{{color}};">设置复读间隔</button>
+    </view>
+    <view class="controlBox">
+        <button bindtap="onRecordBtnClicked" class='controlButton' style="background-color:{{color}};">{{recordBtnText}}</button>
+        <button bindtap="onPlayBthClicked" class='controlButton' style="background-color:{{color}};">{{playBtnText}}</button>
+    </view>
+    <view>
+        <button bindtap="changeButtonColor" class="noseBtn" style="background-color:{{color}};"></button>
+    </view>
+    <view>
+        <button bindtap="changePageColor" class="mouthBtn" style="background-color:{{color}};"></button>
+    </view>
 </view>
