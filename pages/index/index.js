@@ -12,7 +12,8 @@ Page({
         recordState: NOT_START,
         playState: NOT_START,
         recordBtnText: "Start",
-        playBtnText: "Play"
+        playBtnText: "End",
+        tempFilePath: ""
     },
 
     onRecordBtnClicked: function(){
@@ -27,6 +28,11 @@ Page({
             recordBtnText: (this.data.recordState === GOING) ? "Resume":"Pause",
             recordState: (this.data.recordState === GOING) ? PAUSING : GOING
         });
+        if (this.data.playBtnText==="Play"){
+            this.setData({
+                playBtnText:"End"
+            });
+        }
     },
 
     startRecord: function () {
@@ -40,7 +46,10 @@ Page({
         };
         recorderManager.start(options);
         recorderManager.onStart(() => {
-            console.log('Start record.')
+            console.log('Start record.');
+            wx.setNavigationBarTitle({
+                title: '正在录音...',
+            });
         });
         recorderManager.onError((res) => {
             console.log(res);
@@ -51,13 +60,19 @@ Page({
         recorderManager.pause();
         recorderManager.onPause((res) => {
             console.log('Pause record.');
-        })
+            wx.setNavigationBarTitle({
+                title: '录音已暂停',
+            });
+        });
     },
 
     resumeRecord: function () {
         recorderManager.resume();
-        recorderManager.onStart(() => {
+        recorderManager.onResume(() => {
             console.log('Resume record.');
+            wx.setNavigationBarTitle({
+                title: '正在录音...',
+            });
         });
         recorderManager.onError((res) => {
             console.log(res);
@@ -65,30 +80,60 @@ Page({
     },
     
     stopRecord: function () {
+        const that = this;
         recorderManager.stop();
         recorderManager.onStop((res) => {
-            this.tempFilePath = res.tempFilePath;
+            that.data.tempFilePath = res.tempFilePath;
             console.log('Stop record. Temp file path: ', res.tempFilePath);
-            const { tempFilePath } = res;
+            wx.setNavigationBarTitle({
+                title: '录音已终止',
+            });
         });
     },
 
     onPlayBthClicked: function () {
-        if (this.data.recordState !== NOT_START){
+        if(this.data.playBtnText==="End" && this.data.recordState!== NOT_START){
             this.stopRecord();
             this.setData({
-                recordBtnText: "Start",
-                recordState: NOT_START
+                playBtnText: "Play",
+                recordBtnText: "Start", // 修改 recordBtn 的文字
+                recordState: NOT_START // 设置 recordState 为未开始
             });
+            console.log('End recording.');
+            wx.setNavigationBarTitle({
+                title: '录音已终止',
+            });
+            return;
+        } else {
+            innerAudioContext.src = this.data.tempFilePath;
+            innerAudioContext.play();
         }
-        innerAudioContext.autoplay = true;
-        innerAudioContext.src = this.tempFilePath;
+
         innerAudioContext.onPlay(() => {
             console.log('Start playing audio.');
+            wx.setNavigationBarTitle({
+                title: '正在播放录音',
+            });
         });
+
+        innerAudioContext.onEnded(()=>{
+            console.log('Audio play ended.'); 
+            wx.setNavigationBarTitle({
+                title: '录音播放完毕',
+            });
+            this.setData({
+                playState: NOT_START,
+                playBtnText: "Play"
+            })
+        });
+        
         innerAudioContext.onError((res) => {
-            console.log(res.errMsg);
-            console.log(res.errCode);
+            console.log(res.errMsg, res.errCode);
+            wx.showToast({
+                title: '≧ ﹏ ≦ 很抱歉，出错了一些错误',
+                icon: "none",
+                duration: 1000
+            })
         });
     }
 });
