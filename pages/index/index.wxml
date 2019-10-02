@@ -1,0 +1,4 @@
+<view class="container">
+    <button bindtap="onRecordBtnClicked" class='button'>{{recordBtnText}}</button>
+    <button bindtap="onPlayBthClicked" class='button'>{{playBtnText}}</button>
+</view>
