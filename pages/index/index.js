@@ -147,5 +147,11 @@ Page({
                 duration: 1000
             })
         });
+    },
+
+    onShareAppMessage: function(res) {
+        return {
+          title: "水文生成器"
+        }
     }
 });
