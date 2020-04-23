@@ -4,8 +4,8 @@
     ],
     "window": {
         "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "Simple 复读机",
+        "navigationBarBackgroundColor": "#f9f9f9",
+        "navigationBarTitleText": "简单复读机",
         "navigationBarTextStyle": "black"
     },
     "sitemapLocation": "sitemap.json"
