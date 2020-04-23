@@ -1,8 +1,8 @@
 "use strict";
 
 const app = getApp();
-const recorderManager = wx.getRecorderManager();
-const innerAudioContext = wx.createInnerAudioContext();
+const recorderManager = qq.getRecorderManager();
+const innerAudioContext = qq.createInnerAudioContext();
 innerAudioContext.loop = true;
 
 /*
